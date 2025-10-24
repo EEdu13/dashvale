@@ -20,7 +20,14 @@ pool.on('connect', (client) => {
 // Testar conexão
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
-    console.error('❌ Erro ao conectar ao banco de dados:', err.message);
+    console.error('❌ Erro ao conectar ao banco de dados:');
+    console.error('   Mensagem:', err.message);
+    console.error('   Código:', err.code);
+    console.error('   Host:', process.env.DB_HOST);
+    console.error('   Porta:', process.env.DB_PORT);
+    console.error('   Database:', process.env.DB_NAME);
+    console.error('   User:', process.env.DB_USER);
+    console.error('   Schema:', process.env.DB_SCHEMA);
   } else {
     console.log('✅ Conectado ao PostgreSQL Railway em:', res.rows[0].now);
   }
