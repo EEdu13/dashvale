@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analítico - Apontamentos & Paradas</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Dashboard Analítico</h1>
+            <p>Análise de Apontamentos e Paradas de Rendimento</p>
+            <button id="refreshBtn" class="refresh-btn">🔄 Atualizar Dados</button>
+        </header>
+
+        <!-- Cards de Resumo -->
+        <section class="summary-cards">
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <div class="card-content">
+                    <h3>Total Apontamentos</h3>
+                    <p class="card-value" id="totalApontamentos">-</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">👥</div>
+                <div class="card-content">
+                    <h3>Funcionários</h3>
+                    <p class="card-value" id="totalFuncionarios">-</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">⏱️</div>
+                <div class="card-content">
+                    <h3>Total Horas</h3>
+                    <p class="card-value" id="totalHoras">-</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">💰</div>
+                <div class="card-content">
+                    <h3>Faturamento Total</h3>
+                    <p class="card-value" id="totalFaturamento">-</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">🌾</div>
+                <div class="card-content">
+                    <h3>Total Hectares</h3>
+                    <p class="card-value" id="totalHectares">-</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <div class="card-content">
+                    <h3>Atividades Diferentes</h3>
+                    <p class="card-value" id="totalAtividades">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gráficos Principais -->
+        <section class="charts-grid">
+            <div class="chart-container">
+                <h2>📉 Paradas Mais Frequentes</h2>
+                <canvas id="paradasChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>📈 Horas Trabalhadas (Últimos 30 dias)</h2>
+                <canvas id="horasChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>💵 Faturamento por Período</h2>
+                <canvas id="faturamentoChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>⚡ Taxa de Produtividade (Horas vs Paradas)</h2>
+                <canvas id="produtividadeChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>🏆 Top 10 Funcionários por Horas</h2>
+                <canvas id="funcionariosChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>⚠️ Impacto de Paradas no Período</h2>
+                <canvas id="impactoChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>🌾 Atividades por Hectares Trabalhados</h2>
+                <canvas id="atividadesHectaresChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>⚡ Eficiência: Hectares por Hora</h2>
+                <canvas id="eficienciaChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>📊 Hectares Trabalhados por Período</h2>
+                <canvas id="hectaresPeriodoChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Tabelas de Análise -->
+        <section class="detailed-analysis">
+            <h2>🌾 Análise Detalhada de Atividades e Hectares</h2>
+            <div class="table-container">
+                <table id="atividadesTable">
+                    <thead>
+                        <tr>
+                            <th>Atividade</th>
+                            <th>Execuções</th>
+                            <th>Total Hectares</th>
+                            <th>Média ha/execução</th>
+                            <th>Total Horas</th>
+                            <th>Eficiência (ha/h)</th>
+                            <th>Faturamento</th>
+                        </tr>
+                    </thead>
+                    <tbody id="atividadesTableBody">
+                        <tr><td colspan="7">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="detailed-analysis">
+            <h2>📋 Lista de Atividades Executadas</h2>
+            <div class="table-container">
+                <table id="listaAtividadesTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Atividade</th>
+                            <th>Operador</th>
+                            <th>Máquina</th>
+                            <th>Fazenda</th>
+                            <th>Talhão</th>
+                            <th>Hectares</th>
+                            <th>Horas</th>
+                            <th>Eficiência</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaAtividadesTableBody">
+                        <tr><td colspan="10">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tabela de Análise Detalhada -->
+        <section class="detailed-analysis">
+            <h2>📊 Análise Detalhada de Produtividade</h2>
+            <div class="table-container">
+                <table id="produtividadeTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Horas Trabalhadas</th>
+                            <th>Horas Paradas</th>
+                            <th>Faturamento</th>
+                            <th>Qtd Paradas</th>
+                            <th>Taxa Produtividade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produtividadeTableBody">
+                        <tr><td colspan="6">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <p>Dashboard desenvolvido com Chart.js | Dados em tempo real do PostgreSQL Railway</p>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
