@@ -1,5 +1,7 @@
-// Configuração da API
-const API_URL = 'http://localhost:8080/api';
+// Configuração da API - detecta automaticamente se está em produção ou desenvolvimento
+const API_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:8080/api' 
+    : `${window.location.origin}/api`;
 
 // Variáveis globais para os gráficos
 let charts = {};
