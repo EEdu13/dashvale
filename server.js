@@ -7,6 +7,14 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Log das variáveis de ambiente (apenas uma vez no startup)
+console.log('🔧 Configurações:');
+console.log('   PORT:', PORT);
+console.log('   DB_HOST:', process.env.DB_HOST);
+console.log('   DB_PORT:', process.env.DB_PORT);
+console.log('   DB_NAME:', process.env.DB_NAME);
+console.log('   DB_SCHEMA:', process.env.DB_SCHEMA);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
